@@ -1,17 +1,9 @@
-const menuButton = document.querySelector('.menu-toggle');
-const nav = document.querySelector('.nav');
-
-menuButton.addEventListener('click', () => {
-  const isOpen = nav.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
-  menuButton.setAttribute('aria-label', isOpen ? 'Tutup navigasi' : 'Buka navigasi');
-});
-
-document.querySelectorAll('.nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
-  });
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
+const menuButton=document.querySelector('.menu-toggle');const nav=document.querySelector('.nav');
+if(menuButton&&nav){menuButton.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');}));}
+document.getElementById('year').textContent=new Date().getFullYear();
+const grid=document.getElementById('project-grid');let allProjects=[];let activeCategory='Semua';
+function escapeHTML(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderProjects(){const items=allProjects.filter(p=>activeCategory==='Semua'||p.category===activeCategory);if(!items.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">✳</div><h3>Belum ada proyek pada kategori ini</h3><p>Proyek yang kamu terbitkan dari halaman admin akan muncul di sini.</p></div>';return;}
+grid.innerHTML=items.map(p=>`<article class="project-card">${p.image?`<img class="project-image" src="${escapeHTML(p.image)}" alt="${escapeHTML(p.title)}" loading="lazy">`:'<div class="project-placeholder">✳</div>'}<div class="project-body"><span class="project-type">${escapeHTML(p.category)}</span><h3>${escapeHTML(p.title)}</h3><p>${escapeHTML(p.description)}</p>${p.tools?`<span class="project-stack">${escapeHTML(p.tools)}</span>`:''}${p.link?`<a class="project-link" href="${escapeHTML(p.link)}" target="_blank" rel="noopener noreferrer">Lihat proyek ↗</a>`:''}</div></article>`).join('');}
+document.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('button[data-category]');if(!b)return;activeCategory=b.dataset.category;document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===b));renderProjects();});
+fetch('data/projects.json',{cache:'no-store'}).then(r=>r.ok?r.json():[]).then(data=>{allProjects=Array.isArray(data)?data:[];renderProjects();}).catch(()=>renderProjects());

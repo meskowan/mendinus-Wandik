@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b1020"><title>Admin — APLANNYMW</title><link rel="icon" href="assets/logo-aplannymw.svg"><link rel="stylesheet" href="style.css"></head>
+<body class="admin-page">
+<header class="site-header"><a class="brand" href="index.html"><img src="assets/logo-aplannymw.svg" class="brand-logo" alt=""><span>aplanny<span class="accent">mw</span></span></a><a class="back-top" href="index.html">← Lihat website</a></header>
+<main class="admin-main">
+  <div class="section-heading"><p class="eyebrow">APLANNYMW / CONTROL PANEL</p><h1 class="admin-title">Dashboard <span class="gradient-text">Admin.</span></h1><p class="section-desc">Kelola proyek yang tampil pada website portofolio Mendinus Wandik.</p></div>
+  <section class="notice"><strong>Catatan keamanan:</strong> halaman ini tidak memakai password bawaan yang ditanam di website. Kamu menghubungkan GitHub menggunakan fine-grained Personal Access Token yang hanya disimpan sementara di tab browser. Jangan bagikan token kepada siapa pun. Berikan akses hanya ke repository portofolio ini dengan izin Contents: Read and write.</section>
+  <section class="admin-panel" id="connect-panel">
+    <h2>1. Hubungkan repository GitHub</h2><p class="muted">Isi pemilik repository, nama repository, branch, dan token GitHub kamu.</p>
+    <div class="form-grid"><label>GitHub username / owner<input id="owner" value="meskowan" placeholder="contoh: mendinuswandik" autocomplete="off"></label><label>Nama repository<input id="repo" value="mendinus-Wandik" placeholder="mendinus-wandik" autocomplete="off"></label><label>Branch<input id="branch" value="master"></label><label>Fine-grained token<input id="token" type="password" placeholder="github_pat_..." autocomplete="off"></label></div>
+    <div class="button-row"><button class="button primary" id="connect">Hubungkan GitHub</button><button class="button secondary" id="disconnect" type="button">Putuskan koneksi</button></div><p class="status" id="connection-status" aria-live="polite">Belum terhubung.</p>
+    <details class="help"><summary>Bagaimana membuat token GitHub?</summary><ol><li>Buka GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens.</li><li>Pilih Generate new token, batasi akses ke repository portofolio ini saja.</li><li>Pada Repository permissions, set <b>Contents</b> menjadi <b>Read and write</b>.</li><li>Buat token, salin, lalu tempel di kolom token di atas. Token hanya disimpan di session browser selama tab aktif.</li></ol><p>Jangan aktifkan izin yang tidak diperlukan. Jika token terlanjur terbuka atau dibagikan, cabut token tersebut dari GitHub.</p></details>
+  </section>
+  <section class="admin-panel" id="editor-panel">
+    <h2>2. Tambahkan / edit proyek</h2>
+    <p class="muted">Hubungkan GitHub terlebih dahulu. Gambar akan disimpan di repository dan daftar proyek diperbarui agar terlihat oleh pengunjung.</p>
+    <form id="project-form">
+      <input type="hidden" id="project-id">
+      <div class="form-grid"><label>Judul proyek *<input id="title" required maxlength="90" placeholder="Contoh: Website Profil Desa"></label><label>Kategori *<select id="category" required><option value="Website">Website</option><option value="Aplikasi">Aplikasi</option><option value="Desain">Desain</option><option value="Proyek IT lainnya">Proyek IT lainnya</option><option value="Dokumentasi pekerjaan">Dokumentasi pekerjaan</option></select></label>
+      <label class="full">Deskripsi *<textarea id="description" required maxlength="600" rows="4" placeholder="Jelaskan proyek, tujuan, dan pekerjaan yang kamu lakukan..."></textarea></label>
+      <label>Tautan proyek (opsional)<input id="link" type="url" placeholder="https://..."></label><label>Teknologi / tools (opsional)<input id="tools" maxlength="120" placeholder="HTML, CSS, Figma..."></label>
+      <label class="full">Gambar / dokumentasi (opsional)<input id="image" type="file" accept="image/png,image/jpeg,image/webp,image/gif"><small>Format gambar: PNG, JPG, WEBP, GIF. Maksimal 3 MB per gambar. Gunakan gambar yang kamu miliki hak untuk dipublikasikan.</small></label></div>
+      <div class="preview-wrap" id="preview-wrap" hidden><img id="image-preview" alt="Pratinjau gambar"><button type="button" class="text-button" id="remove-image">Hapus gambar pilihan</button></div>
+      <div class="button-row"><button class="button primary" id="save-project" type="submit">Terbitkan proyek</button><button class="button secondary" id="cancel-edit" type="button" hidden>Batal edit</button></div><p class="status" id="form-status" aria-live="polite"></p>
+    </form>
+  </section>
+  <section class="admin-panel"><div class="panel-heading"><div><h2>3. Proyek yang sudah diterbitkan</h2><p class="muted">Edit atau hapus proyek dari repository.</p></div><button class="button secondary small-button" id="refresh">Muat ulang</button></div><div id="admin-projects" class="admin-project-list"><p class="muted">Hubungkan GitHub untuk melihat daftar proyek.</p></div></section>
+  <p class="admin-foot">APLANNYMW · Admin panel untuk pemilik website.</p>
+</main><script src="admin.js"></script></body></html>
