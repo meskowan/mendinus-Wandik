@@ -2,7 +2,7 @@
 <html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b1020"><title>Admin — APLANNYMW</title><link rel="icon" href="assets/logo-aplannymw.svg"><link rel="stylesheet" href="style.css"></head>
 <body class="admin-page">
 <header class="site-header"><a class="brand" href="index.html"><img src="assets/logo-aplannymw.svg" class="brand-logo" alt=""><span>aplanny<span class="accent">mw</span></span></a><a class="back-top" href="index.html">← Lihat website</a></header>
-<main class="admin-main">
+<main class="admin-main" id="admin-content" hidden>
   <div class="section-heading"><p class="eyebrow">APLANNYMW / CONTROL PANEL</p><h1 class="admin-title">Dashboard <span class="gradient-text">Admin.</span></h1><p class="section-desc">Kelola proyek yang tampil pada website portofolio Mendinus Wandik.</p></div>
   <section class="notice"><strong>Catatan keamanan:</strong> halaman ini tidak memakai password bawaan yang ditanam di website. Kamu menghubungkan GitHub menggunakan fine-grained Personal Access Token yang hanya disimpan sementara di tab browser. Jangan bagikan token kepada siapa pun. Berikan akses hanya ke repository portofolio ini dengan izin Contents: Read and write.</section>
   <section class="admin-panel" id="connect-panel">
@@ -26,4 +26,4 @@
   </section>
   <section class="admin-panel"><div class="panel-heading"><div><h2>3. Proyek yang sudah diterbitkan</h2><p class="muted">Edit atau hapus proyek dari repository.</p></div><button class="button secondary small-button" id="refresh">Muat ulang</button></div><div id="admin-projects" class="admin-project-list"><p class="muted">Hubungkan GitHub untuk melihat daftar proyek.</p></div></section>
   <p class="admin-foot">APLANNYMW · Admin panel untuk pemilik website.</p>
-</main><script src="admin.js"></script></body></html>
+</main><p id="admin-auth-status" class="admin-foot">Memeriksa akses admin...</p><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="auth-client.js"></script><script src="auth-admin-guard.js"></script><script src="admin.js"></script></body></html>

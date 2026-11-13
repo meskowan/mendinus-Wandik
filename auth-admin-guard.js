@@ -1,0 +1,1 @@
+(async()=>{const status=document.getElementById('admin-auth-status');try{const x=await requireAdmin();if(x){document.getElementById('admin-content').hidden=false;status.hidden=true;}}catch(e){status.textContent='Tidak dapat memverifikasi akun. Silakan login kembali.';setTimeout(()=>location.href='login.html',1200);}})();

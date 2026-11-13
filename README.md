@@ -1,44 +1,38 @@
-# APLANNYMW — Portofolio Mendinus Wandik
+# APLANNYMW — Mendinus Wandik
 
-Website statis untuk GitHub Pages dengan dashboard admin yang mengelola proyek melalui GitHub Contents API.
+Website portofolio statis untuk GitHub Pages dengan Login, Register, Dashboard User, dan dasar pengaturan Admin menggunakan Supabase Auth.
 
-## Fitur
-- Website publik responsif dengan profil, keahlian, kontak, dan galeri proyek.
-- Filter kategori: Website, Aplikasi, Desain, Proyek IT lainnya, Dokumentasi pekerjaan.
-- Dashboard admin di `admin.html`: tambah, edit, dan hapus proyek.
-- Gambar proyek disimpan di folder `uploads/`, daftar proyek di `data/projects.json`.
-- Tidak ada token atau password admin bawaan yang ditanam dalam source code.
+## 1. Upload ke GitHub Pages
+1. Ekstrak ZIP ini.
+2. Upload seluruh ISI folder ini ke root repository `meskowan/mendinus-Wandik` (branch `master`), bukan file ZIP-nya.
+3. Pastikan GitHub Pages memakai branch `master` dan folder `/(root)`.
 
-## Deploy ke GitHub Pages
-1. Buat repository GitHub bernama `mendinus-wandik` (atau nama pilihanmu).
-2. Upload seluruh isi folder proyek ini ke root repository.
-3. Pastikan branch repository kamu saat ini adalah `master`; gunakan `master` saat menghubungkan dashboard.
-4. Buka Settings → Pages → Deploy from a branch → `master` → `/(root)` → Save.
-5. Setelah GitHub Pages aktif, buka alamat publik yang ditampilkan GitHub.
+## 2. Siapkan Supabase (wajib untuk login sungguhan)
+1. Buat project di https://supabase.com/.
+2. Buka Project Settings → API.
+3. Salin Project URL dan anon/publishable key. Jangan gunakan `service_role` key.
+4. Isi `supabase-config.js` pada dua nilai placeholder.
+5. Buka SQL Editor Supabase, jalankan seluruh isi `supabase-schema.sql`.
+6. Buka Authentication → URL Configuration. Set Site URL ke `https://meskowan.github.io/mendinus-Wandik/` dan tambahkan Redirect URL yang sama.
+7. Jika Email Confirmation aktif, pengguna harus mengonfirmasi email sebelum login.
 
-## Hubungkan dashboard admin
-1. Di GitHub, buka Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token.
-2. Pada Resource owner pilih akunmu.
-3. Repository access: Only select repositories → pilih repository portofolio ini saja.
-4. Repository permissions: set **Contents: Read and write**. Metadata read-only akan diberikan otomatis.
-5. Buat token dan salin. Jangan kirim token lewat chat, jangan menaruh token ke file website, dan jangan bagikan screenshot yang memperlihatkannya.
-6. Buka `https://meskowan.github.io/mendinus-Wandik/admin.html` (atau `/admin.html` pada domain Pages), owner `meskowan`, repository `mendinus-Wandik`, branch `master`, dan token lalu klik Hubungkan GitHub.
-7. Tambahkan proyek. Setelah commit tersimpan, GitHub Pages akan memperbarui website publik secara otomatis setelah proses deployment selesai.
+## 3. Jadikan akun kamu sebagai Admin
+1. Daftar melalui halaman `register.html` dan verifikasi email jika diminta.
+2. Login sekali, lalu buka Supabase → Authentication → Users dan salin UUID akun kamu.
+3. Di SQL Editor jalankan: `update public.profiles set role = 'admin' where id = 'UUID-AKUN-KAMU';`
+4. Login ulang. Link admin akan muncul di Dashboard User.
 
-## Keamanan dan batasan penting
-- GitHub Pages adalah hosting statis; halaman admin ini bukan sistem login server-side. Siapa pun dapat melihat source code admin, tetapi tidak bisa mengubah repository tanpa token yang valid.
-- Token dimasukkan sendiri oleh pemilik ke browser dan tidak disimpan di localStorage/sessionStorage maupun file proyek. Token berada sementara di memori halaman selama tab terbuka; tutup tab untuk mengakhiri sesi dan tekan Putuskan koneksi sebelum meninggalkan perangkat bersama.
-- Gunakan fine-grained token yang dibatasi ke satu repository dan izin Contents: Read and write saja. Atur masa berlaku token; cabut token dari GitHub bila perangkat hilang atau token terpapar.
-- Jangan gunakan dashboard dari perangkat umum. Jangan pernah memberikan token ke orang lain.
-- File gambar dibatasi maksimal 3 MB dan format JPG/PNG/WEBP/GIF. Hapus proyek menghapus entri dari daftar; file gambar lama di folder `uploads/` mungkin masih tertinggal dan bisa dihapus manual dari GitHub.
-- Sebelum publikasi, pastikan kamu memiliki hak untuk memublikasikan foto, desain, dokumen, dan informasi dalam proyek.
-- Ganti `emailkamu@example.com` pada `index.html` dengan email aktif. Jangan mengisi pengalaman atau proyek yang belum benar-benar kamu kerjakan.
+## Catatan keamanan penting
+- Password dikelola oleh Supabase Auth, tidak disimpan di file website.
+- Jangan pernah menaruh `service_role` key di GitHub atau browser.
+- Role admin hanya boleh diberikan oleh pemilik project melalui Supabase SQL Editor.
+- Dashboard admin lama untuk mengelola proyek GitHub tetap menggunakan GitHub token yang dimasukkan saat sesi admin; jangan bagikan token lewat chat dan batasi akses token ke repository ini saja.
+- GitHub Pages tidak menyediakan backend/server sendiri. Supabase dibutuhkan agar login dan akun bekerja lintas perangkat.
 
-## Struktur
-- `index.html` — website publik
-- `admin.html` — dashboard admin
-- `admin.js` — pengelolaan repository melalui GitHub API
-- `script.js` — galeri proyek publik dan filter
-- `style.css` — tampilan responsif
-- `data/projects.json` — data awal proyek
-- `assets/logo-aplannymw.svg` — logo brand
+## File utama
+- `index.html`: website publik
+- `login.html` / `register.html`: halaman autentikasi
+- `dashboard.html`: dashboard user dan edit nama profil
+- `admin.html`: dashboard pengelolaan proyek GitHub yang sudah ada
+- `supabase-config.js`: konfigurasi project Supabase
+- `supabase-schema.sql`: tabel profil, trigger pendaftaran, dan kebijakan akses
